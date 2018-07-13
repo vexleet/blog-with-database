@@ -31,6 +31,12 @@ module.exports = function (sequelize) {
         return inputPasswordHash === this.passwordHash;
     };
 
+    User.associate = (models) => {
+        User.hasMany(models.Article, {
+            foreignKey: 'authorId',
+            targetKey: 'id'
+        });
+    };
 
     return User;
 
