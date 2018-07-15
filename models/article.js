@@ -20,7 +20,7 @@ module.exports = function (sequelize) {
         }
     });
 
-    Article.associate = function (models){
+    Article.associate = function (models) {
         Article.belongsTo(models.User, {
             foreignKey: 'authorId',
             targetKey: 'id'

@@ -17,4 +17,5 @@ module.exports = (app) =>{
     app.post('/article/create', articleController.createPost);
 
     app.get('/article/details/:id', articleController.details);
+    app.post('/article/details/:id', articleController.commentPost);
 };

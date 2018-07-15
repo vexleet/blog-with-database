@@ -11,7 +11,7 @@
                 </p>
 
                 <small class="author">
-                    {{this.User.fullName}}
+                    {{userFullName}}
                 </small>
 
                 <footer>
@@ -20,6 +20,43 @@
                     </div>
                 </footer>
             </article>
+        </div>
+        <div class="container">
+            <form method="post">
+                <div class="form-group">
+                    <label for="comment">Comment:</label>
+                    <textarea class="form-control" id="articleContent" rows="5" name="content" required style="max-width: 100%">{{comment}}</textarea>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-11">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            <div class="col-md-12">
+                {{#each comments}}
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <div class="thumbnail">
+                                <img class="img-responsive user-photo" src="http://robohash.org/sitsequiquia.png?size=120x120">
+                            </div><!-- /thumbnail -->
+                        </div><!-- /col-sm-1 -->
+
+                        <div class="col-sm-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>{{this.User.fullName}}</strong> <!--<span class="text-muted">commented 5 days ago</span>-->
+                                </div>
+                                <div class="panel-body">
+                                    {{this.content}}
+                                </div><!-- /panel-body -->
+                            </div><!-- /panel panel-default -->
+                        </div><!-- /col-sm-5 -->
+                </div>
+                <br>
+            {{/each}}
         </div>
     </div>
 </div>
