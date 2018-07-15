@@ -29,7 +29,9 @@ module.exports = {
                     email: registerArgs.email,
                     passwordHash: passwordHash,
                     fullName: registerArgs.fullName,
-                    salt: salt
+                    salt: salt,
+                    birthDate: registerArgs.birthDate,
+                    gender: registerArgs.gender
                 };
 
                 User.create(userObject).then(user => {
@@ -73,5 +75,9 @@ module.exports = {
     logout: (req, res) => {
         req.logOut();
         res.redirect('/');
+    },
+
+    detailsGet: (req, res) => {
+        res.render('user/details');
     }
 };

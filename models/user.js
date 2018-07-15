@@ -17,13 +17,20 @@ module.exports = function (sequelize) {
             type: Sequelize.STRING,
             required: true
         },
+        birthDate: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            required: true,
+        },
         salt: {
             type: Sequelize.STRING,
             required: true
         },
+        gender: {
+            type: Sequelize.STRING,
+            required: true
+        }
 
-    }, {
-        timestamps: false
     });
 
     User.prototype.authenticate = function (password) {

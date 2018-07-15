@@ -9,6 +9,7 @@ module.exports = (app) =>{
     app.post('/user/register', userController.registerPost);
     app.get('/user/login',userController.loginGet);
     app.post('/user/login',userController.loginPost);
+    app.get('/user/details', userController.detailsGet);
 
     app.get('/user/logout',userController.logout);
 
