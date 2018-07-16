@@ -16,10 +16,15 @@ module.exports = {
             } else if (registerArgs.password !== registerArgs.repeatedPassword) {
                 errorMsg = 'Passwords do not match!'
             }
+            else if(!registerArgs.birthDate){
+                errorMsg = 'Please enter your birth date!';
+            }
 
             if (errorMsg) {
                 registerArgs.error = errorMsg;
-                res.render('user/register', registerArgs)
+                res.render('user/register',{
+                   'error': registerArgs.error,
+                });
             } else {
 
                 let salt = encryption.generateSalt();
@@ -57,7 +62,9 @@ module.exports = {
         User.findOne({where: {email: loginArgs.email}}).then(user => {
             if (!user || !user.authenticate(loginArgs.password)) {
                 loginArgs.error = 'Either username or password is invalid!';
-                res.render('user/login', loginArgs);
+                res.render('user/login', {
+                    'error': loginArgs.error
+                });
                 return;
             }
 
