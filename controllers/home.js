@@ -5,6 +5,7 @@ module.exports = {
     index: (req, res) => {
         let args = req.body;
         let offsetNum = 0;
+        let counter = 0;
 
         if(args.articlesNumber){
             offsetNum = Number(args.articlesNumber);
@@ -19,6 +20,13 @@ module.exports = {
                 offsetNum += Number(args.articlesNumberNext);
             }
         }
+        let articlesLength = 0;
+
+        Article.findAll().then(articles =>{
+            articlesLength = articles.length;
+        });
+
+
 
         Article.findAll({
             offset: offsetNum,
@@ -27,7 +35,10 @@ module.exports = {
                 model: User
             }]
         }).then(articles => {
-            res.render('home/index', {articles: articles});
+            res.render('home/index', {
+                articles: articles,
+                pages: articlesLength
+            });
         });
     }
 };
