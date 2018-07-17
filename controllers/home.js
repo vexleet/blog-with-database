@@ -3,8 +3,27 @@ const User = require('../models').User;
 
 module.exports = {
     index: (req, res) => {
+        let args = req.body;
+        let offsetNum = 0;
+
+        if(args.articlesNumber){
+            offsetNum = Number(args.articlesNumber);
+
+            if(args.articlesNumberPrevious){
+                offsetNum -= Number(args.articlesNumberPrevious);
+                if(offsetNum < 0){
+                    offsetNum = Number(args.articlesNumber);
+                }
+            }
+            else if(args.articlesNumberNext){
+                offsetNum += Number(args.articlesNumberNext);
+            }
+        }
+
         Article.findAll({
-            limit: 6, include: [{
+            offset: offsetNum,
+            limit: 6,
+            include: [{
                 model: User
             }]
         }).then(articles => {

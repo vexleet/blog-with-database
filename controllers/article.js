@@ -54,7 +54,6 @@ module.exports = {
             saveArticle = article;
         });
 
-
         Comments.findAll({
             include: [{
                 model: User
@@ -71,7 +70,7 @@ module.exports = {
                 comments: save,
                 title: saveArticle.title,
                 content: saveArticle.content,
-                userFullName: saveArticle.User.fullName,
+                userFullName: saveArticle.User.dataValues.fullName,
             });
 
         });
@@ -80,12 +79,27 @@ module.exports = {
 
     commentPost: (req, res) => {
         let getBody = req.body;
+        let id = req.params.id;
+        let saveArticle = {};
+
+        let errorMsg = '';
+
+        if (!req.isAuthenticated()) {
+            errorMsg = 'You are not logged in!';
+        }
+
+        if(errorMsg){
+            res.render('user/login', {
+                'error': errorMsg,
+            });
+            return;
+        }
 
         getBody.authorId = req.user.id;
-        getBody.articleId = req.params.id;
+        getBody.articleId = id;
 
         Comments.create(getBody).then(comment => {
-            res.redirect('/');
+            res.redirect(`/article/details/${id}`);
         })
     },
 };
