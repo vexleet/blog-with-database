@@ -96,10 +96,23 @@ module.exports = {
         let userId = req.params.id;
 
         User.findOne({where: {id: userId}}).then(user => {
-            user.update(args)
-                .then(() => {
-                    res.redirect(`/${user.fullName}/details`);
+            if(user.authenticate(args.password)){
+                user.update({
+                    fullName: args.fullName,
+                    email: args.email,
+                    birthDate: args.birthDate,
+                    gender: args.gender,
+                })
+                    .then(() => {
+                        res.redirect(`/${user.fullName}/details`);
+                    });
+            }
+            else{
+                res.render(`user/edit`, {
+                    error: 'Password does not match!'
                 });
+            }
+
         });
     },
 
@@ -112,9 +125,9 @@ module.exports = {
         let userId = req.params.id;
 
         User.findOne({where: {id: userId}}).then(user => {
-            if(args.password === args.repeatedPassword){
+            if(args.newPassword === args.repeatedPassword && user.authenticate(args.oldPassword)){
                 let salt = encryption.generateSalt();
-                let passwordHash = encryption.hashPassword(args.password, salt);
+                let passwordHash = encryption.hashPassword(args.newPassword, salt);
 
                 user.update({
                     passwordHash: passwordHash,
@@ -122,6 +135,16 @@ module.exports = {
                 }).then(() => {
                     res.redirect(`/${user.fullName}/details`);
                 })
+            }
+            else if(args.newPassword === args.repeatedPassword && !user.authenticate(args.oldPassword)){
+                res.render(`user/password`, {
+                    error: 'Old password must match the first password!'
+                });
+            }
+            else {
+                res.render(`user/password`, {
+                    error: 'Passwords do not match!'
+                });
             }
         });
     }
