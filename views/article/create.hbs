@@ -1,7 +1,9 @@
 <div class="container body-content span=8 offset=2">
     {{#if error}}
-        <div class="has-error">
-            <h3>{{error}}</h3>
+        <div class="alert alert-info alert-dismissable">
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <i class="fa fa-coffee"></i>
+            {{error}}
         </div>
     {{/if}}
     <div class="well">

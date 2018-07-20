@@ -1,20 +1,19 @@
 {{#if user}}
-    <div class="container" >
+    <div class="container">
         <h1>Edit Profile</h1>
         <hr>
 
         <!-- edit form column -->
+
         <div class="col-md-9 personal-info">
-            <div class="alert alert-info alert-dismissable">
-                <a class="panel-close close" data-dismiss="alert">×</a>
-                <i class="fa fa-coffee"></i>
-                {{#if error}}
+            {{#if error}}
+                <div class="alert alert-info alert-dismissable">
+                    <a class="panel-close close" data-dismiss="alert">×</a>
+                    <i class="fa fa-coffee"></i>
                     {{error}}
-                {{/if}}
-                {{#unless error}}
-                    <p>Change your profile</p>
-                {{/unless}}
-            </div>
+                </div>
+            {{/if}}
+
             <h3>Personal info</h3>
 
             <form class="form-horizontal" role="form" method="post">
