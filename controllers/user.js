@@ -1,5 +1,6 @@
 const encryption = require("../utilities/encryption");
 const User = require('../models').User;
+const Article = require('../models').Article;
 
 module.exports = {
     registerGet: (req, res) => {
@@ -147,5 +148,57 @@ module.exports = {
                 });
             }
         });
-    }
+    },
+
+    articlesGet: (req, res) => {
+        let userId = req.params.id;
+
+        Article.findAll({where: {authorId: userId}})
+            .then(article => {
+                res.render('user/articles', { articles: article });
+            })
+    },
+
+    deleteGet: (req, res) => {
+        res.render('user/deleteArticle.hbs');
+    },
+
+    deletePost: (req, res) => {
+        let artId = req.params.id;
+
+        Article.findById(artId)
+            .then(article => {
+                let userId = article.authorId;
+                article.destroy({force: true});
+                res.redirect(`/user/articles/${userId}`)
+            })
+    },
+
+    editArticleGet: (req, res) => {
+        let artId = req.params.id;
+
+        Article.findById(artId)
+            .then(article => {
+                res.render('user/editArticle', {
+                   title: article.title,
+                   content: article.content
+               });
+            });
+    },
+
+    editArticlePost: (req, res) => {
+        let articleId = req.params.id;
+        let args = req.body;
+
+        Article.findById(articleId)
+            .then(article => {
+                let userId = article.authorId;
+
+                article.update({
+                    title: args.title,
+                    'content': args.content
+                });
+                res.redirect(`/`)
+            });
+    },
 };

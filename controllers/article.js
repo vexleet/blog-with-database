@@ -32,7 +32,6 @@ module.exports = {
             return;
         }
 
-        console.log(req.user);
         articleArgs.authorId = req.user.id;
 
         Article.create(articleArgs).then(article => {
@@ -51,36 +50,31 @@ module.exports = {
                 model: User
             }]
         }).then(article => {
-            saveArticle = article;
-        });
-
-        Comments.findAll({
-            include: [{
-                model: User
-            }]
-        }).then(current => {
-            let save = [];
-            for (let i = 0; i < current.length; i++) {
-                if (current[i].dataValues.articleId == id) {
-                    save.push(current[i]);
+            Comments.findAll({
+                include: [{
+                    model: User
+                }]
+            }).then(current => {
+                let comments = [];
+                for (let i = 0; i < current.length; i++) {
+                    if (current[i].articleId == id) {
+                        comments.push(current[i]);
+                    }
                 }
-            }
 
-            res.render('article/details', {
-                comments: save,
-                title: saveArticle.title,
-                content: saveArticle.content,
-                userFullName: saveArticle.User.dataValues.fullName,
+                res.render('article/details', {
+                    comments: comments,
+                    title: article.title,
+                    content: article.content,
+                    userFullName: article.User.fullName,
+                });
             });
-
         });
-
     },
 
     commentPost: (req, res) => {
         let getBody = req.body;
         let id = req.params.id;
-        let saveArticle = {};
 
         let errorMsg = '';
 
@@ -88,7 +82,7 @@ module.exports = {
             errorMsg = 'You are not logged in!';
         }
 
-        if(errorMsg){
+        if (errorMsg) {
             res.render('user/login', {
                 'error': errorMsg,
             });
@@ -98,8 +92,9 @@ module.exports = {
         getBody.authorId = req.user.id;
         getBody.articleId = id;
 
-        Comments.create(getBody).then(comment => {
+        Comments.create(getBody).then(() => {
             res.redirect(`/article/details/${id}`);
         })
     },
+
 };

@@ -17,8 +17,15 @@ module.exports = (app) =>{
     app.get('/:fullName/edit/:id', userController.editGet);
     app.post('/:fullName/edit/:id', userController.editPost);
 
+    app.get('/user/articles/:id', userController.articlesGet);
+    app.get('/user/article/edit/:id', userController.editArticleGet);
+    app.post('/user/article/edit/:id', userController.editArticlePost);
+    app.get('/user/article/delete/:id', userController.deleteGet);
+    app.post('/user/article/delete/:id', userController.deletePost);
+
     app.get('/:fullName/changePassword/:id', userController.passwordGet);
     app.post('/:fullName/changePassword/:id', userController.passwordPost);
+
     app.get('/user/logout',userController.logout);
 
     app.get('/article/create', articleController.createGet);
