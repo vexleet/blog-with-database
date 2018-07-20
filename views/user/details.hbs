@@ -29,11 +29,15 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="row">-->
-                            <!--<div class="col-md-12">-->
-                                <!--<hr><button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <hr><a href='/{{user.fullName}}/edit/{{user.id}}' class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+                            </div>
+                            <div class="col-md-12">
+                                <a href='/{{user.fullName}}/changePassword/{{user.id}}' class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Change Password</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

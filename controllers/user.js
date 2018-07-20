@@ -85,6 +85,44 @@ module.exports = {
     },
 
     detailsGet: (req, res) => {
-        res.render('user/details');
+        res.render(`user/details`);
+    },
+
+    editGet: (req, res) => {
+        res.render('user/edit');
+    },
+    editPost: (req, res) =>{
+        let args = req.body;
+        let userId = req.params.id;
+
+        User.findOne({where: {id: userId}}).then(user => {
+            user.update(args)
+                .then(() => {
+                    res.redirect(`/${user.fullName}/details`);
+                });
+        });
+    },
+
+    passwordGet: (req, res) => {
+        res.render('user/password');
+    },
+
+    passwordPost: (req, res) => {
+        let args = req.body;
+        let userId = req.params.id;
+
+        User.findOne({where: {id: userId}}).then(user => {
+            if(args.password === args.repeatedPassword){
+                let salt = encryption.generateSalt();
+                let passwordHash = encryption.hashPassword(args.password, salt);
+
+                user.update({
+                    passwordHash: passwordHash,
+                    salt: salt,
+                }).then(() => {
+                    res.redirect(`/${user.fullName}/details`);
+                })
+            }
+        });
     }
 };

@@ -8,10 +8,17 @@ module.exports = (app) =>{
 
     app.get('/user/register', userController.registerGet);
     app.post('/user/register', userController.registerPost);
+
     app.get('/user/login',userController.loginGet);
     app.post('/user/login',userController.loginPost);
-    app.get('/user/details', userController.detailsGet);
 
+    app.get('/:fullName/details', userController.detailsGet);
+
+    app.get('/:fullName/edit/:id', userController.editGet);
+    app.post('/:fullName/edit/:id', userController.editPost);
+
+    app.get('/:fullName/changePassword/:id', userController.passwordGet);
+    app.post('/:fullName/changePassword/:id', userController.passwordPost);
     app.get('/user/logout',userController.logout);
 
     app.get('/article/create', articleController.createGet);
