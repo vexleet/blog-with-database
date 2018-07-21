@@ -15,7 +15,8 @@ module.exports = function (sequelize) {
         },
         fullName: {
             type: Sequelize.STRING,
-            required: true
+            required: true,
+            unique: true,
         },
         birthDate: {
             type: Sequelize.STRING,

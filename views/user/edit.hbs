@@ -4,16 +4,14 @@
         <hr>
 
         <!-- edit form column -->
-
-        <div class="col-md-9 personal-info">
-            {{#if error}}
-                <div class="alert alert-info alert-dismissable">
-                    <a class="panel-close close" data-dismiss="alert">×</a>
-                    <i class="fa fa-coffee"></i>
-                    {{error}}
-                </div>
-            {{/if}}
-
+        {{#if error}}
+            <div class="alert alert-info alert-dismissable">
+                <a class="panel-close close" data-dismiss="alert">×</a>
+                <i class="fa fa-coffee"></i>
+                {{error}}
+            </div>
+        {{/if}}
+        <div class="col-md-8 personal-info">
             <h3>Personal info</h3>
 
             <form class="form-horizontal" role="form" method="post">
@@ -58,7 +56,7 @@
                     <div class="col-md-8">
                         <input type="submit" class="btn btn-primary" value="Save Changes">
                         <span></span>
-                        <input type="reset" class="btn btn-default" value="Cancel">
+                        <a href="/{{user.fullName}}/details" class="btn btn-default">Cancel</a>
                     </div>
                 </div>
             </form>
@@ -67,3 +65,11 @@
     </div>
     <hr>
 {{/if}}
+
+{{#unless user}}
+    <div class="container body-content">
+        <div class="col-md-12">
+            <h1>You are not logged in!</h1>
+        </div>
+    </div>
+{{/unless}}

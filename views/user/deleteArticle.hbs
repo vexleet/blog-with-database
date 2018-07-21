@@ -1,3 +1,4 @@
+{{#if user}}
 <div class="modal-body">
     <label class="col-md-3 control-label"></label>
     <div class="col-md-8">
@@ -8,3 +9,12 @@
         </form>
     </div>
 </div>
+{{/if}}
+
+{{#unless user}}
+    <div class="container body-content">
+        <div class="col-md-12">
+            <h1>You are not logged in!</h1>
+        </div>
+    </div>
+{{/unless}}

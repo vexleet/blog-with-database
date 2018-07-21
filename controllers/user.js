@@ -1,6 +1,8 @@
 const encryption = require("../utilities/encryption");
 const User = require('../models').User;
 const Article = require('../models').Article;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 module.exports = {
     registerGet: (req, res) => {
@@ -10,21 +12,27 @@ module.exports = {
     registerPost: (req, res) => {
         let registerArgs = req.body;
 
-        User.findOne({where: {email: registerArgs.email}}).then(user => {
+        User.findOne({
+            where: {
+                [Op.or]: [{fullName: registerArgs.fullName}, {email: registerArgs.email}]
+            }
+        }).then(user => {
             let errorMsg = '';
+
             if (user) {
-                errorMsg = 'User with the same username exists!';
-            } else if (registerArgs.password !== registerArgs.repeatedPassword) {
+                errorMsg = 'This user already exists!';
+            }
+            else if (registerArgs.password !== registerArgs.repeatedPassword) {
                 errorMsg = 'Passwords do not match!'
             }
-            else if(!registerArgs.birthDate){
+            else if (!registerArgs.birthDate) {
                 errorMsg = 'Please enter your birth date!';
             }
 
             if (errorMsg) {
                 registerArgs.error = errorMsg;
-                res.render('user/register',{
-                   'error': registerArgs.error,
+                res.render('user/register', {
+                    'error': registerArgs.error,
                 });
             } else {
 
@@ -92,12 +100,12 @@ module.exports = {
     editGet: (req, res) => {
         res.render('user/edit');
     },
-    editPost: (req, res) =>{
+    editPost: (req, res) => {
         let args = req.body;
         let userId = req.params.id;
 
         User.findOne({where: {id: userId}}).then(user => {
-            if(user.authenticate(args.password)){
+            if (user.authenticate(args.password)) {
                 user.update({
                     fullName: args.fullName,
                     email: args.email,
@@ -106,9 +114,14 @@ module.exports = {
                 })
                     .then(() => {
                         res.redirect(`/${user.fullName}/details`);
+                    })
+                    .catch(() => {
+                        res.render(`user/edit`, {
+                            error: 'This user already exists!'
+                        });
                     });
             }
-            else{
+            else {
                 res.render(`user/edit`, {
                     error: 'Password does not match!'
                 });
@@ -126,7 +139,7 @@ module.exports = {
         let userId = req.params.id;
 
         User.findOne({where: {id: userId}}).then(user => {
-            if(args.newPassword === args.repeatedPassword && user.authenticate(args.oldPassword)){
+            if (args.newPassword === args.repeatedPassword && user.authenticate(args.oldPassword)) {
                 let salt = encryption.generateSalt();
                 let passwordHash = encryption.hashPassword(args.newPassword, salt);
 
@@ -137,7 +150,7 @@ module.exports = {
                     res.redirect(`/${user.fullName}/details`);
                 })
             }
-            else if(args.newPassword === args.repeatedPassword && !user.authenticate(args.oldPassword)){
+            else if (args.newPassword === args.repeatedPassword && !user.authenticate(args.oldPassword)) {
                 res.render(`user/password`, {
                     error: 'Old password must match the first password!'
                 });
@@ -155,7 +168,7 @@ module.exports = {
 
         Article.findAll({where: {authorId: userId}})
             .then(article => {
-                res.render('user/articles', { articles: article });
+                res.render('user/articles', {articles: article});
             })
     },
 
@@ -180,9 +193,9 @@ module.exports = {
         Article.findById(artId)
             .then(article => {
                 res.render('user/editArticle', {
-                   title: article.title,
-                   content: article.content
-               });
+                    title: article.title,
+                    content: article.content
+                });
             });
     },
 
