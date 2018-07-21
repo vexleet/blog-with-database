@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd676dbc-fe26-4a20-8c8b-318449f0baca" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/user/deleteArticle.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/deleteArticle.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/user/edit.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/edit.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/user/editArticle.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/editArticle.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/user/password.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user/password.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -79,7 +73,7 @@
       <path value="$PROJECT_DIR$/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="85" />
     <option name="y" value="25" />
     <option name="width" value="1750" />
@@ -188,12 +182,12 @@
       <workItem from="1531865021545" duration="48000" />
       <workItem from="1532084526514" duration="11290000" />
       <workItem from="1532120846532" duration="6691000" />
-      <workItem from="1532167614956" duration="3558000" />
+      <workItem from="1532167614956" duration="4162000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49139000" />
+    <option name="totallyTimeSpent" value="49743000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
