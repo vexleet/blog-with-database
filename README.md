@@ -34,7 +34,7 @@ and after that it will tell you on which port it is listening on (don't close th
 
 ### Possible errors
 - If you receive something like this:
-````
+```
 Unable to connect to the database!
 ```
 You either didn't start your MySQL or you didn't create a database in HeidiSQL with the name "blog"
