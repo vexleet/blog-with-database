@@ -44,6 +44,7 @@ password while installing it. All you have to do is  write your password in the 
 when you want to run it.
 
 ### Built With
-- [NodeJS](https://expressjs.com) - The web framework used
+- [NodeJS](https://nodejs.org/en/) - Server
+- [ExpressJS](https://expressjs.com) - The web framework used
 - [Handlebars](https://handlebarsjs.com) - Template
 - [Sequelize](http://docs.sequelizejs.com) - Creating CRUD around [MySQL](https://www.mysql.com) entities
