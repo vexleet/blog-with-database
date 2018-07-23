@@ -1,7 +1,6 @@
 const Article = require('../models').Article;
 const User = require('../models').User;
 const Comments = require('../models').Comments;
-let counter = 0;
 
 module.exports = {
     createGet: (req, res) => {
@@ -34,7 +33,7 @@ module.exports = {
 
         articleArgs.authorId = req.user.id;
 
-        Article.create(articleArgs).then(article => {
+        Article.create(articleArgs).then(() => {
             res.redirect('/');
         }).catch(err => {
             res.render('article/create', {'error': err.message});
@@ -43,7 +42,6 @@ module.exports = {
 
     details: (req, res) => {
         let id = req.params.id;
-        let saveArticle = {};
 
         Article.findById(id, {
             include: [{
