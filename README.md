@@ -55,10 +55,10 @@ When you install the dependencies go to \node_modules\handlebars\dist\cjs\handle
 
 ```javascript
 instance.registerHelper('times', function(n, block) {
-var accum = '';
-for(var i = 1; i <= n; ++i)
-accum += block.fn(i);
-return accum;
+	var accum = '';
+	for(var i = 1; i <= n; ++i)
+		accum += block.fn(i);
+	return accum;
 });
 ```
 
@@ -71,13 +71,13 @@ In /views/home/index.hbs delete this piece of code (it's at the bottom), otherwi
 	
 ```html
 {{#if articles}}
-<form method="post">
-<div class="btn-group" role="toolbar">
-{{#times n}}
-<button class="btn btn-primary" type="submit" value="{{this}}" name="articlesNumber">{{this}}</button>
-{{/times}}
-</div>
-</form>
+	<form method="post">
+		<div class="btn-group" role="toolbar">
+			{{#times n}}
+				<button class="btn btn-primary" type="submit" value="{{this}}" name="articlesNumber">{{this}}</button>
+			{{/times}}
+			</div>
+	</form>
 {{/if}}
 ```
 	
@@ -87,20 +87,20 @@ const Article = require('../models').Article;
 const User = require('../models').User;
 
 module.exports = {
-index: (req, res) => {
-let args = req.body;
+	index: (req, res) => {
+		let args = req.body;
 
-Article.findAll({
-limit: 6,
-include: [{
-model: User
-}]
-}).then(articles => {
-res.render('home/index', {
-articles: articles,
-});
-});
-}
+		Article.findAll({
+			limit: 6,
+			include: [{
+			model: User
+			}]
+		}).then(articles => {
+			res.render('home/index', {
+			articles: articles,
+			});
+		});
+	}
 };
 ```
 
