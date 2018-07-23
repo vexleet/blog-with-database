@@ -51,59 +51,58 @@ when you want to run it and in the project folder /config/config.js you have to 
 
 ### Installing helper for handlebars for pagination
 - If you want pagination
-	When you install the dependencies go to \node_modules\handlebars\dist\cjs\handlebars\helpers and after the helperMissing function write
+When you install the dependencies go to \node_modules\handlebars\dist\cjs\handlebars\helpers and after the helperMissing function write
 
-	```javascript
-		instance.registerHelper('times', function(n, block) {
-			var accum = '';
-			for(var i = 1; i <= n; ++i)
-				accum += block.fn(i);
-			return accum;
-		});
-	```
+```javascript
+instance.registerHelper('times', function(n, block) {
+var accum = '';
+for(var i = 1; i <= n; ++i)
+accum += block.fn(i);
+return accum;
+});
+```
 
-	This piece of code will add a bonus function/helper for handlebars and this will display a pagination and 
-	with that you can display the other articles from the database not only the first six (otherwise you will get an error if you don't do that). 
-	If the pagination goes away just refresh the page till it shows up again. I'm not sure why this is happening but it will be fixed.
+This piece of code will add a bonus function/helper for handlebars and this will display a pagination and 
+with that you can display the other articles from the database not only the first six (otherwise you will get an error if you don't do that). 
+If the pagination goes away just refresh the page till it shows up again. I'm not sure why this is happening but it will be fixed.
 	
 - If you don't want pagination
-	In /views/home/index.hbs delete this piece of code (it's at the bottom), otherwise you will get errors:
+In /views/home/index.hbs delete this piece of code (it's at the bottom), otherwise you will get errors:
 	
-	```html
-		  {{#if articles}}
-				<form method="post">
-					<div class="btn-group" role="toolbar">
-						{{#times n}}
-							<button class="btn btn-primary" type="submit" value="{{this}}"
-								name="articlesNumber">{{this}}</button>
-						{{/times}}
-				</div>
-				</form>
-			{{/if}}
-	```
+```html
+{{#if articles}}
+<form method="post">
+<div class="btn-group" role="toolbar">
+{{#times n}}
+<button class="btn btn-primary" type="submit" value="{{this}}" name="articlesNumber">{{this}}</button>
+{{/times}}
+</div>
+</form>
+{{/if}}
+```
 	
-	After that delete everything from /controllers/home.js and Copy/Paste this code there:
-	```javascript
-		const Article = require('../models').Article;
-		const User = require('../models').User;
+After that delete everything from /controllers/home.js and Copy/Paste this code there:
+```javascript
+const Article = require('../models').Article;
+const User = require('../models').User;
 
-		module.exports = {
-			index: (req, res) => {
-			let args = req.body;
+module.exports = {
+index: (req, res) => {
+let args = req.body;
 
-			Article.findAll({
-				limit: 6,
-				include: [{
-					model: User
-				}]
-			}).then(articles => {
-				res.render('home/index', {
-					articles: articles,
-				});
-				});
-			}
-		};
-	```
+Article.findAll({
+limit: 6,
+include: [{
+model: User
+}]
+}).then(articles => {
+res.render('home/index', {
+articles: articles,
+});
+});
+}
+};
+```
 
 ### Built With
 - [NodeJS](https://nodejs.org/en/) - Server
