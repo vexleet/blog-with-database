@@ -28,7 +28,7 @@ and wait the dependencies to get downloaded and you are done.
 When you finish with installing the dependencies or while you are waiting you have to create a database in HeidiSQL (don't forget to turn on MySQL) with the name "blog" (no other name).
 
 #### If you want different database name
-	In the project folder /config/config.js you have to write the name of the database you want in the "database" key.
+In the project folder /config/config.js you have to write the name of the database you want in the "database" key.
 
 ### Starting the server
 Starting the server is very simple. You have to go to the /bin folder and after that open one more console.
