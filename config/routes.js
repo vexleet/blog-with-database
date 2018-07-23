@@ -6,6 +6,7 @@ module.exports = (app) =>{
     app.get('/',homeController.index);
     app.post('/', homeController.index);
 
+
     app.get('/user/register', userController.registerGet);
     app.post('/user/register', userController.registerPost);
 
