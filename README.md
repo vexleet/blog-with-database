@@ -43,6 +43,18 @@ You either didn't start your MySQL or you didn't create a database in HeidiSQL w
 password while installing it. All you have to do is  write your password in the "Password" field in HeidiSQL 
 when you want to run it.
 
+### If you want bonus functionality
+When you install the dependencies go to \node_modules\handlebars\dist\cjs\handlebars\helpers and after the helperMissing function write
+
+```javascript
+    instance.registerHelper('times', function(n, block) {
+        var accum = '';
+        for(var i = 1; i <= n; ++i)
+            accum += block.fn(i);
+        return accum;
+    });
+```
+
 ### Built With
 - [NodeJS](https://nodejs.org/en/) - Server
 - [ExpressJS](https://expressjs.com) - The web framework used
