@@ -17,6 +17,11 @@ module.exports = function (sequelize) {
             allowNull: false,
             required: true,
             defaultValue: Sequelize.NOW
+        },
+        likes: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0,
+            required: true,
         }
     });
 

@@ -1,0 +1,4 @@
+Здравей, колега или колежка
+Моля сложете този код в \node_modules\handlebars\dist\cjs\handlebars\helpers\helper-missing.js, за да работи всичко без проблеми.
+Код: https://pastebin.com/9KwZ51ax
+Благодаря и приятна вечер/приятен ден.

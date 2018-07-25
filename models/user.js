@@ -30,8 +30,18 @@ module.exports = function (sequelize) {
         gender: {
             type: Sequelize.STRING,
             required: true
+        },
+        likedArticles: {
+            type: Sequelize.STRING,
+            required: true,
+            allowNull: true,
+            get() {
+                return this.getDataValue('likedArticles').split(';')
+            },
+            set(val) {
+                this.setDataValue('likedArticles',val.join(';'));
+            },
         }
-
     });
 
     User.prototype.authenticate = function (password) {
