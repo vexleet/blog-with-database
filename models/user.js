@@ -36,9 +36,22 @@ module.exports = function (sequelize) {
             required: true,
             allowNull: true,
             get() {
-                return this.getDataValue('likedArticles').split(';')
+                if(this.getDataValue('likedArticles') == null){
+                    return this;
+                }
+                return this.getDataValue('likedArticles').split(',')
             },
             set(val) {
+
+                if(this.likedArticles.length > 0){
+                    if(this.likedArticles.includes(val.toString())){
+                        return;
+                    }
+                    let current = [this.likedArticles, val];
+                    this.setDataValue('likedArticles', current.join(','));
+                    return;
+                }
+
                 this.setDataValue('likedArticles',val.join(';'));
             },
         }

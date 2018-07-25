@@ -22,7 +22,7 @@ module.exports = function (sequelize) {
             type: Sequelize.INTEGER,
             defaultValue: 0,
             required: true,
-        }
+        },
     });
 
     Article.associate = function (models) {

@@ -116,20 +116,28 @@ module.exports = {
                 .then(article => {
                     let currentLikes = article.likes;
                     currentLikes += 1;
+                    let userId = req.user.id;
 
                     article.update({
                         likes: currentLikes,
                     })
                         .then(() => {
-                           res.redirect('/');
+                            User.findById(userId)
+                                .then(user => {
+                                    let addLikedArticles = user.likedArticles;
+
+                                    user.update({
+                                        likedArticles: [article.id],
+                                    })
+                                });
+
+                           res.redirect(`/article/details/${id}`);
                         });
                 });
 
             return;
         }
 
-        // console.log(typeof getBody);
-        // console.log(Object.keys(getBody).length);
 
         if (errorMsg) {
             res.render('user/login', {
