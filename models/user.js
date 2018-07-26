@@ -37,22 +37,26 @@ module.exports = function (sequelize) {
             allowNull: true,
             get() {
                 if(this.getDataValue('likedArticles') == null){
-                    return this;
+                    return [];
                 }
-                return this.getDataValue('likedArticles').split(',')
+
+                return this.getDataValue('likedArticles').split(',');
             },
             set(val) {
 
                 if(this.likedArticles.length > 0){
                     if(this.likedArticles.includes(val.toString())){
-                        return;
+                        let indexOfVal = this.likedArticles.indexOf(val.toString());
+                        let arr = this.likedArticles;
+                        arr.splice(indexOfVal, 1);
+                        return this.setDataValue('likedArticles', arr.join(','));
                     }
                     let current = [this.likedArticles, val];
                     this.setDataValue('likedArticles', current.join(','));
                     return;
                 }
 
-                this.setDataValue('likedArticles',val.join(';'));
+                this.setDataValue('likedArticles',val.join(','));
             },
         }
     });

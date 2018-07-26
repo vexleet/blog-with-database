@@ -80,7 +80,7 @@ module.exports = {
         if (!req.isAuthenticated()) {
             errorMsg = 'You are not logged in!';
         }
-        else if(getBody.content === ""){
+        else if (getBody.content === "") {
             errorMsg = "You have to comment something";
             Article.findById(id, {
                 include: [{
@@ -111,28 +111,37 @@ module.exports = {
             });
             return;
         }
-        else if(Object.keys(getBody).length === 0) {
+        else if (Object.keys(getBody).length === 0) {
             Article.findById(id)
                 .then(article => {
                     let currentLikes = article.likes;
-                    currentLikes += 1;
                     let userId = req.user.id;
 
-                    article.update({
-                        likes: currentLikes,
-                    })
-                        .then(() => {
-                            User.findById(userId)
-                                .then(user => {
-                                    let addLikedArticles = user.likedArticles;
+                    User.findById(userId)
+                        .then(user => {
 
-                                    user.update({
-                                        likedArticles: [article.id],
-                                    })
+                            if (user.likedArticles.includes(article.id.toString())) {
+                                currentLikes -= 1;
+                            }
+                            else {
+                                currentLikes += 1;
+                            }
+                            user.update({
+                                likedArticles: [article.id],
+                            });
+
+                            if(currentLikes < 0){
+                                currentLikes = 0;
+                            }
+
+                            article.update({
+                                likes: currentLikes,
+                            })
+                                .then(() => {
+                                    res.redirect(`/article/details/${id}`);
                                 });
-
-                           res.redirect(`/article/details/${id}`);
                         });
+
                 });
 
             return;
