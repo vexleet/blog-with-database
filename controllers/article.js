@@ -53,6 +53,11 @@ module.exports = {
                     model: User
                 }]
             }).then(current => {
+                if (article == null) {
+                    res.render('article/details');
+                    return;
+                }
+
                 let comments = [];
                 for (let i = 0; i < current.length; i++) {
                     if (current[i].articleId == id) {
@@ -62,13 +67,11 @@ module.exports = {
 
                 res.render('article/details', {
                     comments: comments,
-                    title: article.title,
-                    content: article.content,
-                    likes: article.likes,
+                    article: article,
                     userFullName: article.User.fullName,
                 });
             });
-        });
+        })
     },
 
     commentPost: (req, res) => {
@@ -101,9 +104,7 @@ module.exports = {
 
                     res.render('article/details', {
                         comments: comments,
-                        title: article.title,
-                        content: article.content,
-                        likes: article.likes,
+                        article: article,
                         userFullName: article.User.fullName,
                         error: errorMsg,
                     });
@@ -111,42 +112,6 @@ module.exports = {
             });
             return;
         }
-        else if (Object.keys(getBody).length === 0) {
-            Article.findById(id)
-                .then(article => {
-                    let currentLikes = article.likes;
-                    let userId = req.user.id;
-
-                    User.findById(userId)
-                        .then(user => {
-
-                            if (user.likedArticles.includes(article.id.toString())) {
-                                currentLikes -= 1;
-                            }
-                            else {
-                                currentLikes += 1;
-                            }
-                            user.update({
-                                likedArticles: [article.id],
-                            });
-
-                            if(currentLikes < 0){
-                                currentLikes = 0;
-                            }
-
-                            article.update({
-                                likes: currentLikes,
-                            })
-                                .then(() => {
-                                    res.redirect(`/article/details/${id}`);
-                                });
-                        });
-
-                });
-
-            return;
-        }
-
 
         if (errorMsg) {
             res.render('user/login', {
@@ -161,6 +126,46 @@ module.exports = {
         Comments.create(getBody).then(() => {
             res.redirect(`/article/details/${id}`);
         })
+    },
+    likeArticles: (req, res) => {
+        if (!req.isAuthenticated()) {
+            res.render('user/login', {
+                error: "You are not logged in!"
+            });
+            return;
+        }
+        let id = req.params.id;
+
+        Article.findById(id)
+            .then(article => {
+                let currentLikes = article.likes;
+                let userId = req.user.id;
+
+                User.findById(userId)
+                    .then(user => {
+
+                        if (user.likedArticles.includes(article.id.toString())) {
+                            currentLikes -= 1;
+                        }
+                        else {
+                            currentLikes += 1;
+                        }
+                        user.update({
+                            likedArticles: [article.id],
+                        });
+
+                        if (currentLikes < 0) {
+                            currentLikes = 0;
+                        }
+
+                        article.update({
+                            likes: currentLikes,
+                        })
+                            .then(() => {
+                                res.redirect(`/article/details/${id}`);
+                            });
+                    });
+            });
     },
 
 };

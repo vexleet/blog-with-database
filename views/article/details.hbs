@@ -1,85 +1,99 @@
-<div class="container body-content">
-    {{#if error}}
-        <div class="alert alert-info alert-dismissable">
-            <a class="panel-close close" data-dismiss="alert">×</a>
-            <i class="fa fa-coffee"></i>
-            {{error}}
-        </div>
-    {{/if}}
-    <div class="row">
-        <div class="col-md-12">
-            <article>
-                <header>
-                    <h2>{{title}}</h2>
-                </header>
+{{#if article}}
+    <div class="container body-content">
+        {{#if error}}
+            <div class="alert alert-info alert-dismissable">
+                <a class="panel-close close" data-dismiss="alert">×</a>
+                <i class="fa fa-coffee"></i>
+                {{error}}
+            </div>
+        {{/if}}
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+                    <header>
+                        <h2>{{this.article.title}}</h2>
+                    </header>
 
-                <p>
-                    {{content}}
-                </p>
+                    <p>
+                        {{this.article.content}}
+                    </p>
 
-                <small class="author">
-                    {{userFullName}}
-                </small>
+                    <small class="author">
+                        {{this.article.userFullName}}
+                    </small>
 
-                <footer>
-                    <div class="pull-right">
-                        <a class="btn btn-default btn-xs" href="/">Back &raquo;</a>
+                    <footer>
+                        <div class="pull-right">
+                            <a class="btn btn-default btn-xs" href="/">Back &raquo;</a>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+            <div class="container">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="comment">Comment:</label>
+                        <textarea class="form-control" id="articleContent" rows="5" name="content" required
+                                  style="max-width: 100%">{{comment}}</textarea>
                     </div>
-                </footer>
-            </article>
-        </div>
-        <div class="container">
-            <form method="post">
-                <div class="form-group">
-                    <label for="comment">Comment:</label>
-                    <textarea class="form-control" id="articleContent" rows="5" name="content" required
-                              style="max-width: 100%">{{comment}}</textarea>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-4 col-sm-offset-11">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-11">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
                     </div>
+                </form>
+            </div>
+
+            <form method="post" action="/likeArticle/{{this.article.id}}">
+                <div class="container">
+                    <label class="inline">
+                        <button type="submit" style="background: none; border: none; ">
+                            <i class="far fa-thumbs-up " style="font-size: 35px"></i>
+                        </button>
+                    </label>
+                    <label class="inline">
+                        <div style="font-size: 35px">{{this.article.likes}}</div>
+                    </label>
                 </div>
             </form>
-        </div>
-        <form method="post">
+
             <div class="container">
-                <label class="inline">
-                    <button type="submit" style="background: none; border: none; "><i class="far fa-thumbs-up " style="font-size: 35px"></i></button>
-                </label>
-                <label class="inline">
-                    <div style="font-size: 35px">{{likes}}</div>
-                </label>
-            </div>
-        </form>
+                <h3>Comments:</h3>
+                <div class="col-md-12">
+                    {{#each comments}}
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <div class="thumbnail">
+                                    <img class="img-responsive user-photo"
+                                         src="http://robohash.org/sitsequiquia.png?size=120x120">
+                                </div><!-- /thumbnail -->
+                            </div><!-- /col-sm-1 -->
 
-        <div class="container">
-            <h3>Comments:</h3>
-            <div class="col-md-12">
-                {{#each comments}}
-                    <div class="row">
-                        <div class="col-sm-1">
-                            <div class="thumbnail">
-                                <img class="img-responsive user-photo"
-                                     src="http://robohash.org/sitsequiquia.png?size=120x120">
-                            </div><!-- /thumbnail -->
-                        </div><!-- /col-sm-1 -->
-
-                        <div class="col-sm-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <a href="/{{this.User.fullName}}/details"><strong>{{this.User.fullName}}</strong></a>
-                                    <!--<span class="text-muted">commented 5 days ago</span>-->
-                                </div>
-                                <div class="panel-body">
-                                    {{this.content}}
-                                </div><!-- /panel-body -->
-                            </div><!-- /panel panel-default -->
-                        </div><!-- /col-sm-5 -->
-                    </div>
-                    <br>
-                {{/each}}
+                            <div class="col-sm-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="/{{this.User.fullName}}/details"><strong>{{this.User.fullName}}</strong></a>
+                                        <!--<span class="text-muted">commented 5 days ago</span>-->
+                                    </div>
+                                    <div class="panel-body">
+                                        {{this.content}}
+                                    </div><!-- /panel-body -->
+                                </div><!-- /panel panel-default -->
+                            </div><!-- /col-sm-5 -->
+                        </div>
+                        <br>
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>
-</div>
+{{/if}}
+{{#unless article}}
+    <div class="container body-content">
+        <div class="alert alert-info alert-dismissable">
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <i class="fa fa-coffee"></i>
+            There is no such article!
+        </div>
+    </div>
+{{/unless}}

@@ -35,4 +35,5 @@ module.exports = (app) =>{
 
     app.get('/article/details/:id', articleController.details);
     app.post('/article/details/:id', articleController.commentPost);
+    app.post('/likeArticle/:id', articleController.likeArticles);
 };
