@@ -21,6 +21,9 @@ module.exports = {
         else if (!articleArgs.content) {
             errorMsg = 'Invalid content!';
         }
+        else if(articleArgs.content.length < 20 || articleArgs.content.length > 20000){
+            errorMsg = "Content should be between 20 and 20000 characters";
+        }
 
         if (errorMsg) {
             res.render('article/create', {
@@ -32,6 +35,7 @@ module.exports = {
         }
 
         articleArgs.authorId = req.user.id;
+        articleArgs.summary = articleArgs.content.substring(0, articleArgs.content.length / 2) + "...";
 
         Article.create(articleArgs).then(() => {
             res.redirect('/');

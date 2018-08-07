@@ -184,8 +184,8 @@ module.exports = {
         let userId = req.params.id;
 
         Article.findAll({where: {authorId: userId}})
-            .then(article => {
-                res.render('user/articles', {articles: article});
+            .then(articles => {
+                res.render('user/articles', {articles: articles});
             })
     },
 
@@ -200,7 +200,7 @@ module.exports = {
             .then(article => {
                 let userId = article.authorId;
                 article.destroy({force: true});
-                res.redirect(`/user/articles/${userId}`)
+                res.redirect(`/user/articles/${userId}`);
             })
     },
 

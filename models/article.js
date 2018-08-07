@@ -23,6 +23,11 @@ module.exports = function (sequelize) {
             defaultValue: 0,
             required: true,
         },
+        summary: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+            required: true
+        }
     });
 
     Article.associate = function (models) {
