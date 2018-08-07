@@ -94,7 +94,24 @@ module.exports = {
     },
 
     detailsGet: (req, res) => {
-        res.render(`user/details`);
+        res.render(`user/account`);
+    },
+
+    detailsGetUser: (req, res) => {
+        if(req.isAuthenticated()){
+            let userName = req.params.fullName;
+
+            User.findOne({where: {fullName: userName}}).then(user => {
+                res.render('user/member', {
+                    member: user,
+                });
+            });
+        }
+        else{
+            res.render('user/login', {
+                error: "You are not logged in!"
+            })
+        }
     },
 
     editGet: (req, res) => {

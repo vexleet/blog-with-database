@@ -13,7 +13,8 @@ module.exports = (app) =>{
     app.get('/user/login',userController.loginGet);
     app.post('/user/login',userController.loginPost);
 
-    app.get('/:fullName/details', userController.detailsGet);
+    app.get('/account', userController.detailsGet);
+    app.get('/:fullName/details', userController.detailsGetUser);
 
     app.get('/:fullName/edit/:id', userController.editGet);
     app.post('/:fullName/edit/:id', userController.editPost);

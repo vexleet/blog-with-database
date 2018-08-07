@@ -1,0 +1,47 @@
+{{#if member}}
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 lead">User profile
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img class="img-circle avatar avatar-original" style="-webkit-user-select:none;
+              display:block; margin:auto;" src="http://robohash.org/sitsequiquia.png?size=160x160">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h1 class="only-bottom-margin">{{this.member.fullName}}</h1>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span class="text-muted">Birth date:</span> {{this.member.birthDate}}<br>
+                                        <span class="text-muted">Gender:</span> {{this.member.gender}}<br><br>
+                                        <small class="text-muted">Created: {{this.member.createdAt}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
+
+<!--{{#unless user}}-->
+    <!--<div class="container body-content">-->
+        <!--<div class="col-md-12">-->
+            <!--<h1>You have to be logged in to see other profiles!</h1>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--{{/unless}}-->

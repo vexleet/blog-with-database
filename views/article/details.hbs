@@ -54,6 +54,7 @@
         </form>
 
         <div class="container">
+            <h3>Comments:</h3>
             <div class="col-md-12">
                 {{#each comments}}
                     <div class="row">
@@ -67,7 +68,7 @@
                         <div class="col-sm-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <strong>{{this.User.fullName}}</strong>
+                                    <a href="/{{this.User.fullName}}/details"><strong>{{this.User.fullName}}</strong></a>
                                     <!--<span class="text-muted">commented 5 days ago</span>-->
                                 </div>
                                 <div class="panel-body">
